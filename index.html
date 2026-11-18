@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math & Programming Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <section id="authPage" class="auth-container">
+        <div class="auth-box">
+            <div class="logo">M<span>P</span>A</div>
+            <h1>Math & Programming</h1>
+            <p>Platform Belajar Matematika dan Coding</p>
+
+            <div id="loginForm">
+                <h2>Login</h2>
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button onclick="login()">Masuk</button>
+                <p>Belum punya akun? <a onclick="showRegister()">Daftar</a></p>
+            </div>
+
+            <div id="registerForm" class="hidden">
+                <h2>Buat Akun</h2>
+                <input type="text" id="regName" placeholder="Nama lengkap">
+                <input type="text" id="regUsername" placeholder="Username">
+                <input type="password" id="regPassword" placeholder="Password">
+                <button onclick="register()">Daftar Sekarang</button>
+                <p>Sudah punya akun? <a onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- APLIKASI -->
+    <div id="appPage" class="app hidden">
+
+        <aside class="sidebar">
+            <h2 class="brand">M<span>P</span>A</h2>
+            <p class="side-label">MENU UTAMA</p>
+
+            <button class="nav-btn active" onclick="showPage('dashboard',this)">🏠 Dashboard</button>
+            <button class="nav-btn" onclick="showPage('math',this)">📐 Matematika</button>
+            <button class="nav-btn" onclick="showPage('programming',this)">💻 Pemrograman</button>
+            <button class="nav-btn" onclick="showPage('playground',this)">⌨️ Code Playground</button>
+            <button class="nav-btn" onclick="showPage('quiz',this)">📝 Kuis</button>
+            <button class="nav-btn" onclick="showPage('calculator',this)">🧮 Kalkulator</button>
+            <button class="nav-btn" onclick="showPage('progress',this)">📊 Progres Belajar</button>
+
+            <div class="sidebar-bottom">
+                <p id="sideUser">Mahasiswa</p>
+                <button class="logout-btn" onclick="logout()">↪ Keluar</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h2>Math & Programming Academy</h2>
+                    <p>Belajar, Berlatih, dan Berkembang</p>
+                </div>
+                <div class="profile" id="profileName">Mahasiswa</div>
+            </header>
+
+            <!-- DASHBOARD -->
+            <section id="dashboard" class="page">
+                <div class="welcome">
+                    <div>
+                        <span class="tag">STUDENT DASHBOARD</span>
+                        <h1>Selamat Datang, <span id="welcomeName">Mahasiswa</span> 👋</h1>
+                        <p>Mulai perjalananmu menjadi ahli Matematika dan Programmer.</p>
+                    </div>
+                    <div class="welcome-icon">🚀</div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <span>📚</span>
+                        <p>Total Materi</p>
+                        <h2 id="totalMaterials">10</h2>
+                    </div>
+                    <div class="stat-card">
+                        <span>✅</span>
+                        <p>Materi Selesai</p>
+                        <h2 id="completedCount">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <span>📝</span>
+                        <p>Kuis Dikerjakan</p>
+                        <h2 id="quizCount">0</h2>
+                    </div>
+                    <div class="stat-card">
+                        <span>📈</span>
+                        <p>Progres Belajar</p>
+                        <h2 id="progressPercent">0%</h2>
+                    </div>
+                </div>
+
+                <div class="section-heading">
+                    <h2>Jalur Pembelajaran</h2>
+                    <p>Pilih materi yang ingin kamu pelajari.</p>
+                </div>
+
+                <div class="course-grid">
+                    <div class="course-card">
+                        <div class="course-icon">📐</div>
+                        <h3>Matematika</h3>
+                        <p>Aljabar, Kalkulus, Statistik, Matriks, dan Graf.</p>
+                        <button onclick="showPage('math')">Mulai Belajar →</button>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">💻</div>
+                        <h3>Pemrograman</h3>
+                        <p>Python, HTML, CSS, JavaScript, dan Algoritma.</p>
+                        <button onclick="showPage('programming')">Mulai Belajar →</button>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">⌨️</div>
+                        <h3>Code Playground</h3>
+                        <p>Tempat mencoba dan menjalankan kode JavaScript.</p>
+                        <button onclick="showPage('playground')">Coba Coding →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATEMATIKA -->
+            <section id="math" class="page hidden">
+                <div class="page-heading">
+                    <h1>📐 Pembelajaran Matematika</h1>
+                    <p>Pelajari konsep matematika secara bertahap.</p>
+                </div>
+                <div id="mathList" class="lesson-list"></div>
+                <div id="mathDetail" class="detail-box hidden"></div>
+            </section>
+
+            <!-- PEMROGRAMAN -->
+            <section id="programming" class="page hidden">
+                <div class="page-heading">
+                    <h1>💻 Pembelajaran Pemrograman</h1>
+                    <p>Belajar coding mulai dari dasar hingga tingkat lanjut.</p>
+                </div>
+                <div id="programList" class="lesson-list"></div>
+                <div id="programDetail" class="detail-box hidden"></div>
+            </section>
+
+            <!-- PLAYGROUND -->
+            <section id="playground" class="page hidden">
+                <div class="page-heading">
+                    <h1>⌨️ Code Playground</h1>
+                    <p>Tulis dan jalankan kode JavaScript secara langsung.</p>
+                </div>
+
+                <div class="editor-box">
+                    <div class="editor-header">
+                        <span>● ● ● &nbsp; script.js</span>
+                        <button onclick="runCode()">▶ Jalankan Kode</button>
+                    </div>
+                    <textarea id="codeEditor" spellcheck="false">const nama = "Mahasiswa";
+const nilai = 90;
+
+if (nilai >= 75) {
+    console.log("Selamat " + nama);
+    console.log("Kamu lulus!");
+} else {
+    console.log("Belajar lebih giat!");
+}</textarea>
+                    <h3>Output Program</h3>
+                    <pre id="codeOutput">Hasil program akan muncul di sini...</pre>
+                </div>
+                <p class="note">Catatan: Playground ini menjalankan JavaScript, bukan Python.</p>
+            </section>
+
+            <!-- KUIS -->
+            <section id="quiz" class="page hidden">
+                <div class="page-heading">
+                    <h1>📝 Kuis Pengetahuan</h1>
+                    <p>Uji pemahaman Matematika dan Pemrograman.</p>
+                </div>
+                <div class="quiz-box">
+                    <div class="quiz-top">
+                        <span id="questionNumber">Soal 1</span>
+                        <span id="quizScore">Skor: 0</span>
+                    </div>
+                    <h2 id="questionText">Pertanyaan akan muncul di sini.</h2>
+                    <div id="answerOptions"></div>
+                    <p id="quizFeedback"></p>
+                    <button id="nextQuestion" onclick="nextQuestion()" disabled>Soal Berikutnya →</button>
+                </div>
+            </section>
+
+            <!-- KALKULATOR -->
+            <section id="calculator" class="page hidden">
+                <div class="page-heading">
+                    <h1>🧮 Kalkulator</h1>
+                    <p>Alat bantu perhitungan matematika.</p>
+                </div>
+                <div class="calculator">
+                    <input type="text" id="calcDisplay" value="0" readonly>
+                    <div class="calc-buttons">
+                        <button onclick="clearCalc()" class="danger">C</button>
+                        <button onclick="deleteCalc()">DEL</button>
+                        <button onclick="appendCalc('/')">÷</button>
+                        <button onclick="appendCalc('*')">×</button>
+
+                        <button onclick="appendCalc('7')">7</button>
+                        <button onclick="appendCalc('8')">8</button>
+                        <button onclick="appendCalc('9')">9</button>
+                        <button onclick="appendCalc('-')">−</button>
+
+                        <button onclick="appendCalc('4')">4</button>
+                        <button onclick="appendCalc('5')">5</button>
+                        <button onclick="appendCalc('6')">6</button>
+                        <button onclick="appendCalc('+')">+</button>
+
+                        <button onclick="appendCalc('1')">1</button>
+                        <button onclick="appendCalc('2')">2</button>
+                        <button onclick="appendCalc('3')">3</button>
+                        <button onclick="calculate()" class="equal">=</button>
+
+                        <button onclick="appendCalc('0')" class="zero">0</button>
+                        <button onclick="appendCalc('.')">.</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROGRES -->
+            <section id="progress" class="page hidden">
+                <div class="page-heading">
+                    <h1>📊 Progres Belajar</h1>
+                    <p>Pantau perkembangan belajarmu.</p>
+                </div>
+                <div class="progress-box">
+                    <h2>Progres Keseluruhan</h2>
+                    <div class="progress-track">
+                        <div id="progressBar"></div>
+                    </div>
+                    <h2 id="progressText">0% Selesai</h2>
+                    <p id="progressDescription">Kamu belum menyelesaikan materi.</p>
+                </div>
+                <div class="history-box">
+                    <h2>Riwayat Aktivitas</h2>
+                    <ul id="historyList"></ul>
+                </div>
+            </section>
+
+            <footer>
+                <p>© 2026 Math & Programming Academy | Student Edition</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
