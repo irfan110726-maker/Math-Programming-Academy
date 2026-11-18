@@ -1,581 +1,837 @@
 
-// ===================================
-// MATH & PROGRAMMING ACADEMY
-// ===================================
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-let currentUser = null;
+:root {
+    --bg: #090d1b;
+    --panel: #111a30;
+    --panel2: #182440;
+    --border: #293653;
+    --text: #f1f5f9;
+    --muted: #93a4bd;
+    --purple: #9062ff;
+    --blue: #38bdf8;
+    --green: #22c55e;
+}
 
-// DATA MATERI
-const mathLessons = [
-    {
-        title: "Aljabar",
-        description: "Mempelajari variabel, persamaan, dan pertidaksamaan.",
-        content: "Aljabar adalah cabang matematika yang menggunakan huruf atau simbol untuk mewakili bilangan.",
-        example: "2x + 4 = 10\n2x = 10 - 4\n2x = 6\nx = 3"
-    },
-    {
-        title: "Kalkulus",
-        description: "Mempelajari limit, turunan, dan integral.",
-        content: "Kalkulus mempelajari perubahan dan akumulasi. Turunan digunakan untuk menentukan laju perubahan, sedangkan integral digunakan untuk menghitung luas dan akumulasi.",
-        example: "Jika f(x) = x²\nMaka f'(x) = 2x"
-    },
-    {
-        title: "Statistika",
-        description: "Mempelajari mean, median, modus, dan variansi.",
-        content: "Statistika merupakan ilmu yang mempelajari pengumpulan, pengolahan, analisis, dan penyajian data.",
-        example: "Data: 70, 80, 90\nMean = (70 + 80 + 90) / 3\nMean = 80"
-    },
-    {
-        title: "Matriks",
-        description: "Mempelajari operasi dan determinan matriks.",
-        content: "Matriks adalah susunan bilangan berbentuk baris dan kolom.",
-        example: "A = [1  2]\n    [3  4]\n\nDeterminan A = (1×4) - (2×3)\n= -2"
-    },
-    {
-        title: "Teori Graf",
-        description: "Mempelajari simpul, sisi, dan algoritma graf.",
-        content: "Graf adalah struktur matematika yang terdiri dari simpul (vertex) dan sisi (edge). Graf dapat digunakan untuk memodelkan jaringan dan rute.",
-        example: "V = {A, B, C}\nE = {(A,B), (B,C)}"
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+}
+
+button, input, textarea, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.small {
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.primary {
+    padding: 12px 19px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    background: linear-gradient(110deg, var(--purple), #477de9);
+}
+
+.full {
+    width: 100%;
+}
+
+.secondary {
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: var(--panel2);
+    color: white;
+}
+
+.success {
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: #15803d;
+    color: white;
+}
+
+.danger {
+    background: #7f1d1d !important;
+}
+
+/* AUTH */
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at 15% 10%, #372166, transparent 35%),
+        radial-gradient(circle at 85% 90%, #103d60, transparent 35%),
+        var(--bg);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 35px;
+    text-align: center;
+    background: #111a30;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 25px 80px #0008;
+}
+
+.logo, .brand {
+    font-size: 37px;
+    font-weight: 800;
+    color: var(--purple);
+    letter-spacing: 2px;
+}
+
+.logo span, .brand span {
+    color: var(--blue);
+}
+
+.auth-card h1 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.auth-card > p {
+    margin-bottom: 25px;
+    font-size: 12px;
+}
+
+.auth-card h2 {
+    margin-bottom: 15px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.auth-card input:focus, .search:focus {
+    border-color: var(--purple);
+}
+
+.auth-switch {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 20px;
+}
+
+.auth-switch a {
+    color: var(--blue);
+    cursor: pointer;
+}
+
+/* LAYOUT */
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 255px;
+    min-width: 255px;
+    background: #0e1528;
+    border-right: 1px solid var(--border);
+    padding: 25px 17px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    margin-left: 12px;
+}
+
+.brand-sub {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin: 2px 12px 35px;
+}
+
+.nav-title {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin: 0 12px 10px;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 3px 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    text-align: left;
+    transition: .2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: #242c4b;
+    color: white;
+}
+
+.nav-btn.active {
+    border-left: 3px solid var(--purple);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(130deg, var(--purple), var(--blue));
+    font-weight: 800;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+.user-info strong {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.logout {
+    color: #fda4af;
+    background: #321b31;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.main {
+    min-width: 0;
+    flex: 1;
+    padding: 25px 35px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 30px;
+}
+
+.topbar h2 {
+    font-size: 19px;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.top-user {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 12px;
+}
+
+.top-user span {
+    color: #4ade80;
+}
+
+.page {
+    animation: appear .25s ease;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(120deg, #35216c, #164968);
+    border: 1px solid #55448c;
+    border-radius: 17px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.eyebrow {
+    color: #a5b4fc;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    margin: 15px 0 10px;
+    font-size: 27px;
+}
+
+.hero h1 span {
+    color: #7dd3fc;
+}
+
+.hero p {
+    font-size: 13px;
+    color: #dbeafe;
+    margin-bottom: 20px;
+}
+
+.hero-art {
+    font-size: 65px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+}
+
+.stat-card span {
+    font-size: 24px;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 11px;
+    margin: 12px 0 7px;
+}
+
+.stat-card h2 {
+    font-size: 27px;
+    color: var(--blue);
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0 18px;
+}
+
+.section-title h1 {
+    font-size: 24px;
+}
+
+.section-title h2 {
+    font-size: 18px;
+}
+
+.section-title p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* COURSES */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.course-card, .lesson-card, .panel {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 13px;
+    padding: 22px;
+}
+
+.course-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 25px;
+    margin-bottom: 16px;
+}
+
+.purple {
+    color: #c4b5fd;
+    background: #38275f;
+}
+
+.blue {
+    color: #7dd3fc;
+    background: #173e59;
+}
+
+.green {
+    color: #86efac;
+    background: #16472f;
+}
+
+.course-card h3 {
+    margin-bottom: 9px;
+}
+
+.course-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    min-height: 65px;
+}
+
+.course-card button {
+    color: var(--blue);
+    background: transparent;
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+/* LESSON */
+.search {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: white;
+    outline: none;
+}
+
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.lesson-card h3 {
+    font-size: 16px;
+    margin-bottom: 9px;
+}
+
+.lesson-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.lesson-card button {
+    padding: 10px 13px;
+    margin-top: 15px;
+    color: #c4b5fd;
+    background: #29234b;
+    border-radius: 7px;
+}
+
+.lesson-card button:hover {
+    background: var(--purple);
+    color: white;
+}
+
+.back-btn {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    background: var(--panel2);
+    color: white;
+    border-radius: 7px;
+}
+
+.lesson-detail h1 {
+    margin: 12px 0;
+}
+
+.lesson-detail h3 {
+    margin: 24px 0 12px;
+}
+
+.lesson-content {
+    color: #cbd5e1;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+.lesson-detail pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    background: #080d18;
+    border-radius: 9px;
+    padding: 18px;
+    color: #86efac;
+    line-height: 1.7;
+}
+
+/* EDITOR */
+.editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.editor-toolbar select {
+    padding: 10px;
+    color: white;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+.editor-toolbar div {
+    display: flex;
+    gap: 8px;
+}
+
+#codeEditor {
+    width: 100%;
+    height: 320px;
+    resize: vertical;
+    background: #080d18;
+    color: #86efac;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    padding: 20px;
+    font-family: Consolas, monospace;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.output-heading {
+    margin: 20px 0 10px;
+}
+
+#codeOutput {
+    background: #080d18;
+    border-radius: 9px;
+    min-height: 80px;
+    padding: 17px;
+    color: #7dd3fc;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.preview {
+    width: 100%;
+    height: 250px;
+    margin-top: 15px;
+    background: white;
+    border: none;
+    border-radius: 8px;
+}
+
+/* QUIZ AND EXERCISES */
+.exercise-panel, .quiz-panel {
+    max-width: 760px;
+}
+
+.exercise-panel h2, .quiz-panel h2 {
+    font-size: 19px;
+    margin: 18px 0;
+}
+
+.option-btn {
+    width: 100%;
+    text-align: left;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 14px;
+    margin: 7px 0;
+    border-radius: 8px;
+}
+
+.option-btn:hover:not(:disabled) {
+    border-color: var(--purple);
+}
+
+.option-btn.correct {
+    border-color: var(--green);
+    background: #14532d;
+}
+
+.option-btn.wrong {
+    border-color: #ef4444;
+    background: #7f1d1d;
+}
+
+.option-btn:disabled {
+    cursor: default;
+}
+
+#exerciseFeedback, #quizFeedback {
+    margin: 15px 0;
+    font-size: 13px;
+}
+
+.quiz-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--blue);
+    font-size: 13px;
+}
+
+.quiz-progress, .large-progress {
+    width: 100%;
+    height: 11px;
+    background: #293653;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 18px 0;
+}
+
+#quizProgressBar, #overallProgress {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--purple), var(--blue));
+    transition: .3s;
+}
+
+/* CALCULATOR */
+.calculator {
+    max-width: 370px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.calc-expression {
+    min-height: 20px;
+    color: var(--muted);
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+#calcDisplay {
+    width: 100%;
+    padding: 17px 5px;
+    background: transparent;
+    color: var(--blue);
+    border: none;
+    outline: none;
+    text-align: right;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.calc-grid button {
+    background: var(--panel2);
+    color: white;
+    padding: 16px 5px;
+    border-radius: 8px;
+}
+
+.calc-grid button:hover {
+    background: var(--purple);
+}
+
+.calc-grid .equal {
+    grid-row: span 2;
+    background: var(--purple);
+}
+
+.calc-grid .zero {
+    grid-column: span 2;
+}
+
+/* PROGRESS */
+.progress-panel {
+    max-width: 750px;
+    margin-bottom: 20px;
+}
+
+.large-progress {
+    height: 15px;
+    margin: 20px 0;
+}
+
+.progress-panel > p {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.activity-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.activity-list li {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.activity-list li:last-child {
+    border: 0;
+}
+
+.score-row {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer {
+    text-align: center;
+    padding: 35px 0 10px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 14px 20px;
+    background: #183d31;
+    color: #bbf7d0;
+    border: 1px solid #28754c;
+    border-radius: 9px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: 10;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+/* MOBILE */
+@media(max-width: 1050px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-];
 
-const programmingLessons = [
-    {
-        title: "Dasar Python",
-        description: "Mengenal bahasa pemrograman Python.",
-        content: "Python merupakan bahasa pemrograman yang mudah dipelajari dan banyak digunakan dalam komputasi matematika, analisis data, dan kecerdasan buatan.",
-        example: 'nama = "Irfan"\nprint("Halo", nama)'
-    },
-    {
-        title: "Variabel dan Tipe Data",
-        description: "Mengenal string, integer, float, dan boolean.",
-        content: "Variabel adalah tempat menyimpan data. Tipe data menentukan jenis nilai yang disimpan.",
-        example: 'nama = "Irfan"  # String\numur = 20       # Integer\nipk = 3.75      # Float\naktif = True    # Boolean'
-    },
-    {
-        title: "Percabangan If Else",
-        description: "Membuat keputusan dalam program.",
-        content: "If else digunakan untuk menjalankan perintah berdasarkan kondisi tertentu.",
-        example: "nilai = 85\n\nif nilai >= 75:\n    print('Lulus')\nelse:\n    print('Tidak Lulus')"
-    },
-    {
-        title: "Perulangan For",
-        description: "Mengulang perintah secara otomatis.",
-        content: "For loop digunakan untuk menjalankan perintah berulang kali.",
-        example: "for i in range(1, 6):\n    print(i)"
-    },
-    {
-        title: "Function",
-        description: "Membuat fungsi agar kode lebih terstruktur.",
-        content: "Function merupakan blok kode yang dibuat untuk menjalankan tugas tertentu dan dapat dipanggil kembali.",
-        example: "def tambah(a, b):\n    return a + b\n\nprint(tambah(5, 3))"
-    },
-    {
-        title: "HTML, CSS, JavaScript",
-        description: "Membangun website dari dasar.",
-        content: "HTML membangun struktur halaman, CSS mengatur tampilan, dan JavaScript membuat halaman menjadi interaktif.",
-        example: '<h1>Halo Dunia</h1>\n<button onclick="alert(\'Halo!\')">Klik Saya</button>'
-    },
-    {
-        title: "Algoritma dan Sorting",
-        description: "Mempelajari logika dan pengurutan data.",
-        content: "Algoritma adalah langkah-langkah sistematis untuk menyelesaikan masalah. Sorting merupakan proses mengurutkan data.",
-        example: "data = [5, 2, 8, 1]\ndata.sort()\nprint(data)"
-    },
-    {
-        title: "Data Science",
-        description: "Analisis data menggunakan Python.",
-        content: "Data Science menggabungkan statistika, pemrograman, dan analisis data. Library yang sering digunakan adalah NumPy, Pandas, dan Matplotlib.",
-        example: "import numpy as np\n\ndata = np.array([10, 20, 30])\nprint(np.mean(data))"
-    }
-];
-
-// DATABASE
-function getDatabase() {
-    return JSON.parse(localStorage.getItem("mpa_users") || "{}");
-}
-
-function saveDatabase(database) {
-    localStorage.setItem("mpa_users", JSON.stringify(database));
-}
-
-function userKey(username) {
-    return "mpa_data_" + username;
-}
-
-function getUserData() {
-    return JSON.parse(localStorage.getItem(userKey(currentUser)) || '{"completed":[],"history":[],"quizCount":0}');
-}
-
-function saveUserData(data) {
-    localStorage.setItem(userKey(currentUser), JSON.stringify(data));
-}
-
-// LOGIN & REGISTER
-function showRegister() {
-    document.getElementById("loginForm").classList.add("hidden");
-    document.getElementById("registerForm").classList.remove("hidden");
-}
-
-function showLogin() {
-    document.getElementById("registerForm").classList.add("hidden");
-    document.getElementById("loginForm").classList.remove("hidden");
-}
-
-function register() {
-    const name = document.getElementById("regName").value.trim();
-    const username = document.getElementById("regUsername").value.trim();
-    const password = document.getElementById("regPassword").value;
-
-    if (!name || !username || !password) {
-        alert("Semua kolom harus diisi!");
-        return;
-    }
-
-    if (password.length < 4) {
-        alert("Password minimal 4 karakter!");
-        return;
-    }
-
-    const database = getDatabase();
-
-    if (database[username]) {
-        alert("Username sudah digunakan!");
-        return;
-    }
-
-    database[username] = { name, password };
-    saveDatabase(database);
-
-    alert("Pendaftaran berhasil! Silakan login.");
-    showLogin();
-}
-
-function login() {
-    const username = document.getElementById("loginUsername").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    const database = getDatabase();
-
-    if (database[username] && database[username].password === password) {
-        currentUser = username;
-        localStorage.setItem("mpa_session", username);
-        openApp();
-    } else {
-        alert("Username atau password salah!");
+    .course-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-function logout() {
-    localStorage.removeItem("mpa_session");
-    currentUser = null;
-    document.getElementById("appPage").classList.add("hidden");
-    document.getElementById("authPage").classList.remove("hidden");
-}
-
-function openApp() {
-    const database = getDatabase();
-    const user = database[currentUser];
-
-    document.getElementById("authPage").classList.add("hidden");
-    document.getElementById("appPage").classList.remove("hidden");
-
-    document.getElementById("welcomeName").textContent = user.name;
-    document.getElementById("profileName").textContent = user.name;
-    document.getElementById("sideUser").textContent = user.name;
-
-    renderLessons();
-    updateDashboard();
-}
-
-// NAVIGASI
-function showPage(pageId, button) {
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.add("hidden");
-    });
-
-    document.getElementById(pageId).classList.remove("hidden");
-
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    if (button) {
-        button.classList.add("active");
-    } else {
-        const matching = [...document.querySelectorAll(".nav-btn")]
-            .find(btn => btn.getAttribute("onclick")?.includes("'" + pageId + "'"));
-        if (matching) matching.classList.add("active");
+@media(max-width: 720px) {
+    .app {
+        display: block;
     }
 
-    if (pageId === "progress") updateDashboard();
-}
-
-// MATERI
-function renderLessons() {
-    renderLessonList(mathLessons, "mathList", "math");
-    renderLessonList(programmingLessons, "programList", "programming");
-}
-
-function renderLessonList(lessons, containerId, category) {
-    const container = document.getElementById(containerId);
-    const data = getUserData();
-
-    container.innerHTML = "";
-
-    lessons.forEach((lesson, index) => {
-        const id = category + "-" + index;
-        const completed = data.completed.includes(id);
-
-        const card = document.createElement("div");
-        card.className = "lesson-card";
-
-        const title = document.createElement("h3");
-        title.textContent = lesson.title;
-
-        const description = document.createElement("p");
-        description.textContent = lesson.description;
-
-        const button = document.createElement("button");
-        button.textContent = completed ? "✓ Sudah Dipelajari" : "Pelajari Materi →";
-        button.addEventListener("click", () => openLesson(category, index));
-
-        card.append(title, description, button);
-        container.appendChild(card);
-    });
-}
-
-function openLesson(category, index) {
-    const lessons = category === "math" ? mathLessons : programmingLessons;
-    const lesson = lessons[index];
-    const id = category + "-" + index;
-    const detail = document.getElementById(category + "Detail");
-
-    detail.classList.remove("hidden");
-    detail.innerHTML = "";
-
-    const title = document.createElement("h2");
-    title.textContent = lesson.title;
-
-    const description = document.createElement("p");
-    description.textContent = lesson.content;
-
-    const exampleTitle = document.createElement("h3");
-    exampleTitle.textContent = "Contoh:";
-
-    const example = document.createElement("pre");
-    example.textContent = lesson.example;
-
-    const completeButton = document.createElement("button");
-    completeButton.textContent = "Tandai Sudah Dipelajari";
-    completeButton.addEventListener("click", () => completeLesson(id));
-
-    detail.append(title, description, exampleTitle, example, completeButton);
-    detail.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function completeLesson(id) {
-    const data = getUserData();
-
-    if (!data.completed.includes(id)) {
-        data.completed.push(id);
-        addHistory("Menyelesaikan materi " + id);
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
     }
 
-    saveUserData(data);
-    renderLessons();
-    updateDashboard();
-    alert("Materi berhasil ditandai selesai!");
-}
-
-function addHistory(message) {
-    const data = getUserData();
-
-    data.history.unshift({
-        message,
-        date: new Date().toLocaleString("id-ID")
-    });
-
-    data.history = data.history.slice(0, 30);
-    saveUserData(data);
-}
-
-// DASHBOARD & PROGRES
-function updateDashboard() {
-    const data = getUserData();
-    const total = mathLessons.length + programmingLessons.length;
-    const completed = data.completed.length;
-    const percent = Math.round((completed / total) * 100);
-
-    document.getElementById("totalMaterials").textContent = total;
-    document.getElementById("completedCount").textContent = completed;
-    document.getElementById("quizCount").textContent = data.quizCount;
-    document.getElementById("progressPercent").textContent = percent + "%";
-
-    document.getElementById("progressBar").style.width = percent + "%";
-    document.getElementById("progressText").textContent = percent + "% Selesai";
-    document.getElementById("progressDescription").textContent =
-        completed + " dari " + total + " materi telah diselesaikan.";
-
-    const historyList = document.getElementById("historyList");
-    historyList.innerHTML = "";
-
-    if (data.history.length === 0) {
-        const li = document.createElement("li");
-        li.textContent = "Belum ada aktivitas belajar.";
-        historyList.appendChild(li);
-    } else {
-        data.history.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = item.date + " — " + item.message;
-            historyList.appendChild(li);
-        });
-    }
-}
-
-// CODE PLAYGROUND
-function runCode() {
-    const code = document.getElementById("codeEditor").value;
-    const output = document.getElementById("codeOutput");
-
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("sandbox", "allow-scripts");
-    iframe.style.display = "none";
-
-    const safeCode = JSON.stringify(code);
-
-    iframe.srcdoc = `
-        <script>
-        const logs = [];
-        console.log = (...args) => logs.push(args.map(x =>
-            typeof x === "object" ? JSON.stringify(x) : String(x)
-        ).join(" "));
-
-        console.error = (...args) => logs.push("ERROR: " + args.join(" "));
-        console.warn = (...args) => logs.push("WARNING: " + args.join(" "));
-
-        try {
-            new Function(${safeCode})();
-        } catch(error) {
-            logs.push("ERROR: " + error.message);
-        }
-
-        parent.postMessage({
-            type: "mpa-output",
-            output: logs.join("\\\\n") || "Program berhasil dijalankan (tidak ada output)."
-        }, "*");
-        <\/script>
-    `;
-
-    const handler = event => {
-        if (event.source !== iframe.contentWindow) return;
-        if (event.data?.type !== "mpa-output") return;
-
-        output.textContent = event.data.output;
-        window.removeEventListener("message", handler);
-        iframe.remove();
-    };
-
-    window.addEventListener("message", handler);
-    document.body.appendChild(iframe);
-
-    setTimeout(() => {
-        if (iframe.isConnected) {
-            window.removeEventListener("message", handler);
-            iframe.remove();
-            output.textContent = "Waktu eksekusi habis atau program tidak memberikan respons.";
-        }
-    }, 3000);
-}
-
-// KUIS
-const questions = [
-    {
-        question: "Berapakah hasil dari 5 + 7?",
-        options: ["10", "11", "12", "13"],
-        answer: 2
-    },
-    {
-        question: "Turunan dari f(x) = x² adalah?",
-        options: ["x", "2x", "x²", "2"],
-        answer: 1
-    },
-    {
-        question: "Bahasa pemrograman yang menggunakan perintah print() adalah?",
-        options: ["Python", "HTML", "CSS", "SQL"],
-        answer: 0
-    },
-    {
-        question: "Apa fungsi dari HTML?",
-        options: [
-            "Mengatur database",
-            "Membuat struktur halaman web",
-            "Mengatur jaringan",
-            "Mengedit gambar"
-        ],
-        answer: 1
-    },
-    {
-        question: "Apa fungsi dari perulangan for?",
-        options: [
-            "Menghapus data",
-            "Membuat variabel",
-            "Mengulang perintah",
-            "Menghentikan komputer"
-        ],
-        answer: 2
-    }
-];
-
-let questionIndex = 0;
-let score = 0;
-let answered = false;
-
-function loadQuestion() {
-    answered = false;
-
-    const q = questions[questionIndex];
-
-    document.getElementById("questionNumber").textContent =
-        "Soal " + (questionIndex + 1) + " / " + questions.length;
-
-    document.getElementById("quizScore").textContent = "Skor: " + score;
-    document.getElementById("questionText").textContent = q.question;
-    document.getElementById("quizFeedback").textContent = "";
-    document.getElementById("nextQuestion").disabled = true;
-    document.getElementById("nextQuestion").textContent =
-        questionIndex === questions.length - 1 ? "Lihat Hasil" : "Soal Berikutnya →";
-
-    const options = document.getElementById("answerOptions");
-    options.innerHTML = "";
-
-    q.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.className = "answer-btn";
-        button.textContent = option;
-        button.addEventListener("click", () => checkAnswer(index));
-        options.appendChild(button);
-    });
-}
-
-function checkAnswer(index) {
-    if (answered) return;
-    answered = true;
-
-    const q = questions[questionIndex];
-    const buttons = document.querySelectorAll(".answer-btn");
-
-    buttons.forEach((button, i) => {
-        button.disabled = true;
-        if (i === q.answer) button.classList.add("correct");
-        if (i === index && index !== q.answer) button.classList.add("wrong");
-    });
-
-    if (index === q.answer) {
-        score += 20;
-        document.getElementById("quizFeedback").textContent = "✓ Jawaban benar!";
-        document.getElementById("quizFeedback").style.color = "#4ade80";
-    } else {
-        document.getElementById("quizFeedback").textContent =
-            "✗ Jawaban salah. Jawaban yang benar: " + q.options[q.answer];
-        document.getElementById("quizFeedback").style.color = "#f87171";
+    .brand {
+        margin: 0 8px;
+        font-size: 28px;
     }
 
-    document.getElementById("quizScore").textContent = "Skor: " + score;
-    document.getElementById("nextQuestion").disabled = false;
-}
-
-function nextQuestion() {
-    if (!answered) return;
-
-    if (questionIndex < questions.length - 1) {
-        questionIndex++;
-        loadQuestion();
-    } else {
-        finishQuiz();
-    }
-}
-
-function finishQuiz() {
-    const data = getUserData();
-    data.quizCount++;
-    addHistory("Menyelesaikan kuis dengan skor " + score);
-    saveUserData(data);
-
-    document.getElementById("questionText").textContent =
-        "Kuis selesai! Skor kamu: " + score + " / 100";
-
-    document.getElementById("answerOptions").innerHTML = "";
-    document.getElementById("quizFeedback").textContent =
-        score >= 80 ? "Hebat! Pertahankan prestasimu." : "Tetap semangat, terus belajar!";
-    document.getElementById("nextQuestion").textContent = "Ulangi Kuis";
-    document.getElementById("nextQuestion").disabled = false;
-    document.getElementById("nextQuestion").onclick = restartQuiz;
-
-    updateDashboard();
-}
-
-function restartQuiz() {
-    questionIndex = 0;
-    score = 0;
-    document.getElementById("nextQuestion").onclick = nextQuestion;
-    loadQuestion();
-}
-
-// KALKULATOR
-function appendCalc(value) {
-    const display = document.getElementById("calcDisplay");
-    const current = display.value;
-
-    if (current === "Error") {
-        display.value = value;
-    } else if (current === "0" && /[0-9.]/.test(value)) {
-        display.value = value;
-    } else {
-        display.value += value;
-    }
-}
-
-function clearCalc() {
-    document.getElementById("calcDisplay").value = "0";
-}
-
-function deleteCalc() {
-    const display = document.getElementById("calcDisplay");
-    display.value = display.value.length > 1
-        ? display.value.slice(0, -1)
-        : "0";
-}
-
-function calculate() {
-    const display = document.getElementById("calcDisplay");
-    const expression = display.value;
-
-    // Hanya menerima angka dan operator matematika.
-    if (!/^[0-9+\-*/.() ]+$/.test(expression)) {
-        display.value = "Error";
-        return;
+    .brand-sub, .nav-title, .sidebar-footer {
+        display: none;
     }
 
-    try {
-        const result = Function('"use strict"; return (' + expression + ')')();
+    .nav-btn {
+        width: auto;
+        display: inline-block;
+        padding: 10px;
+        font-size: 11px;
+    }
 
-        display.value = Number.isFinite(result)
-            ? String(Number(result.toFixed(10)))
-            : "Error";
-    } catch {
-        display.value = "Error";
+    .main {
+        padding: 18px 14px;
+    }
+
+    .topbar h2 {
+        font-size: 15px;
+    }
+
+    .top-user {
+        font-size: 10px;
+        gap: 6px;
+    }
+
+    .hero {
+        padding: 22px;
+    }
+
+    .hero h1 {
+        font-size: 21px;
+    }
+
+    .hero-art {
+        font-size: 38px;
+    }
+
+    .stats-grid, .course-grid, .lesson-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title h1 {
+        font-size: 20px;
     }
 }
-
-// MULAI APLIKASI
-document.addEventListener("DOMContentLoaded", () => {
-    const session = localStorage.getItem("mpa_session");
-    const database = getDatabase();
-
-    if (session && database[session]) {
-        currentUser = session;
-        openApp();
-    }
-
-    loadQuestion();
-});
